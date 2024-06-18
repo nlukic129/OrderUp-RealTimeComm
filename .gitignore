@@ -1,7 +1,5 @@
 node_modules
 # Keep environment variables out of version control
 .env
-migrations
 .vscode
-customer-app
 orderup-630e4-firebase-adminsdk-wufk7-ebdd62d534.json
