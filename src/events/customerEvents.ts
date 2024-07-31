@@ -26,6 +26,7 @@ export const handleCustomerEvents = (socket: CustomSocket) => {
   socket.on("call-waiter", async (table: ITable, callback: (response: { status: string; message: string }) => void) => {
     try {
       const { id } = table;
+      // TODO Obavestiti i ostale customere na stolu da je neko pozvao konobara da bi se njima onemogucilo da pozivaju konobara
       await notifyAndEmit(table, ENotificationType.CALL_WAITER, [], `waiters:${id}`);
       callback({ status: "success", message: "Waiter called" });
     } catch (error: any) {
@@ -36,6 +37,7 @@ export const handleCustomerEvents = (socket: CustomSocket) => {
   socket.on("pay", async (table: ITable, paymentType: EPaymentType, callback: (response: { status: string; message: string }) => void) => {
     try {
       // ! TODO - KADA SE OKINE POZIV ZA PLACANJE OD JEDNOG CUSTOMERA, ONEMOGUCITI NJEMU I SVIM OSTALIRMA DA ISTA RADE NA APP OSIM DA CEKAJU KONOBARA DA DONESE RACUN
+      // TODO Obavestiti i ostale customere na stolu da je neko poslao poziv da plati da bi se njima onemogucilo da koriste app
       const { id } = table;
       await notifyAndEmit(table, ENotificationType.PAY, [paymentType], `waiters:${id}`);
       await redis.sadd(`payment:${id}`, paymentType);
@@ -48,6 +50,7 @@ export const handleCustomerEvents = (socket: CustomSocket) => {
   socket.on("message", async (table: ITable, message: string, callback: (response: { status: string; message: string }) => void) => {
     try {
       const { id } = table;
+      // TODO Obavestiti i ostale customere na stolu da je neko poslao neku poruku da bi se njima onemogucilo da posalju tu poruku
       await notifyAndEmit(table, ENotificationType.MESSAGE, [message], `waiters:${id}`);
       await redis.sadd(`messages:${id}`, message);
       callback({ status: "success", message: "Message sent" });

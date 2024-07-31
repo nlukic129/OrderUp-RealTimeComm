@@ -11,6 +11,8 @@ import { OrderData } from "../types/OrderData";
 import { CustomSocket } from "../types/CustomSocket";
 import { STATIC_SERVICE } from "../config";
 
+// ! TODO Ukloniti vodjenje statisteke za konobare
+
 export const handleWaiterEvents = (socket: CustomSocket): void => {
   console.log("Waiter connected");
 
