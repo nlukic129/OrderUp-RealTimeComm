@@ -137,6 +137,7 @@ export const handleWaiterEvents = (socket: CustomSocket): void => {
 
   // Check message
   socket.on("check-message", async (tableId: string, message: string, callback: (response: { status: string; message: string }) => void) => {
+    // TODO obavestiti i customere da je poruka cekirana, da bi se njima omogucilo da je posalju pomovo
     try {
       if (message === "ALL") {
         await redis.del(`messages:${tableId}`);
